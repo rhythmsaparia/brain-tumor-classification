@@ -26,6 +26,9 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         ConfigBox: ConfigBox type
     """
     try:
+        path_to_yaml = Path(path_to_yaml).resolve()  # Get absolute path
+        print("^"*100)
+        print(f"Reading yaml file from: {path_to_yaml}")
         with open(path_to_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
             logger.info(f"yaml file: {path_to_yaml} loaded successfully")
@@ -132,3 +135,6 @@ def decodeImage(imgstring, fileName):
 def encodeImageIntoBase64(croppedImagePath):
     with open(croppedImagePath, "rb") as f:
         return base64.b64encode(f.read())
+
+from src.cnnClassifier.constants import CONFIG_FILE_PATH
+yaml_obj = read_yaml(CONFIG_FILE_PATH)
